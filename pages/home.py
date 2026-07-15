@@ -1,5 +1,3 @@
-from turtle import right
-
 import streamlit as st
 
 from components.hero import hero
