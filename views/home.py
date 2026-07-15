@@ -5,7 +5,7 @@ from components.progress_circle import progress_circle
 from components.course_card import course_card
 from components.stat_card import stat_card
 from database.database import get_materi
-from pages import materi
+from views import materi
 
 def home_page():
 
@@ -57,7 +57,8 @@ def home_page():
             12,
             0,
             "#FFE082",
-            "btn_pajak"
+            "btn_pajak",
+            "Perpajakan"
         )
 
     with col2:
@@ -68,7 +69,8 @@ def home_page():
             18,
             0,
             "#A5D6A7",
-            "btn_manajemen"
+            "btn_manajemen",
+            "Akuntansi Manajemen"
         )
 
     with col3:
@@ -79,13 +81,8 @@ def home_page():
             10,
             0,
             "#90CAF9",
-            "btn_akl"
+            "btn_akl",
+            "Akuntansi Keuangan Lanjutan"
         )
     
     st.divider()
-
-    st.subheader("🧪 Test Google Sheets")
-
-    materi = get_materi()
-
-    st.json(materi[0])

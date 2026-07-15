@@ -1,8 +1,15 @@
+from database.database import get_materi_by_kategori
 import streamlit as st
 
 def chapter_page():
 
     st.title("📚 Daftar Chapter")
+    
+    kategori = st.session_state.get("kategori", "")
+
+    st.caption(f"Kategori: {kategori}")
+
+    materi = get_materi_by_kategori(kategori)
 
     if st.button("⬅ Kembali"):
 
@@ -11,7 +18,7 @@ def chapter_page():
 
     st.divider()
 
-    for i in range(1,10):
+    for item in materi:
 
         with st.container(border=True):
 
@@ -19,17 +26,17 @@ def chapter_page():
 
             with col1:
 
-                st.subheader(f"Chapter {i}")
+                st.subheader(item["Judul"])
 
-                st.caption("Belum dipelajari")
+                st.caption(item["Deskripsi"])
 
             with col2:
 
                 if st.button(
                     "Buka",
-                    key=f"chapter{i}"
+                    key=item["ID Materi"]
                 ):
 
-                    st.session_state.chapter = i
+                    st.session_state.id_materi = item["ID Materi"]
                     st.session_state.page="materi"
                     st.rerun()

@@ -1,6 +1,6 @@
 import streamlit as st
 
-def course_card(icon, title, chapter, progress, color, key):
+def course_card(icon, title, chapter, progress, color, key, kategori):
 
     with st.container(border=True):
 
@@ -37,5 +37,7 @@ def course_card(icon, title, chapter, progress, color, key):
             use_container_width=True
         ):
 
+            st.session_state.kategori = kategori
             st.session_state.page = "chapter"
+
             st.rerun()

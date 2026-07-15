@@ -40,3 +40,27 @@ def get_materi():
     sheet = connect_sheet().worksheet("Materi")
 
     return sheet.get_all_records()
+
+def get_materi_by_kategori(kategori):
+
+    data = get_materi()
+
+    hasil = []
+
+    for row in data:
+
+        if row["Kategori"] == kategori:
+
+            hasil.append(row)
+
+    return hasil
+
+def get_materi_by_id(id_materi):
+
+    data = get_materi()
+
+    for item in data:
+        if item["ID Materi"] == id_materi:
+            return item
+
+    return None

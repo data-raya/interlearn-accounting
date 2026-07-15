@@ -11,11 +11,9 @@ def sidebar():
 
     st.sidebar.divider()
 
-    st.sidebar.page_link(
-        "app.py",
-        label="Dashboard",
-        icon="🏠"
-    )
+    if st.sidebar.button("🏠 Dashboard", use_container_width=True):
+        st.session_state.page = "home"
+        st.rerun()
 
     st.sidebar.markdown("### 📚 Materi")
 
@@ -25,14 +23,10 @@ def sidebar():
 
     st.sidebar.divider()
 
-    st.sidebar.page_link(
-        "pages/quiz.py",
-        label="Quiz",
-        icon="📝"
-    )
+    if st.sidebar.button("📝 Quiz", use_container_width=True):
+        st.session_state.page = "quiz"
+        st.rerun()
 
-    st.sidebar.page_link(
-        "pages/profil.py",
-        label="Profil",
-        icon="👤"
-    )
+    if st.sidebar.button("👤 Profil", use_container_width=True):
+        st.session_state.page = "profil"
+        st.rerun()
