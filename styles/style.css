@@ -31,3 +31,33 @@
     margin-bottom:20px;
 
 }
+
+div[data-testid="stMetric"]{
+
+    border-radius:15px;
+
+    padding:20px;
+
+    border:1px solid #E5E7EB;
+
+    background:white;
+
+    box-shadow:0 4px 15px rgba(0,0,0,.06);
+
+}
+
+div[data-testid="stVerticalBlockBorderWrapper"]{
+
+    border-radius:18px;
+
+}
+
+.stButton>button{
+
+    border-radius:10px;
+
+    height:45px;
+
+    font-weight:600;
+
+}

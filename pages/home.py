@@ -1,7 +1,13 @@
+from turtle import right
+
 import streamlit as st
+
 from components.hero import hero
+from components.progress_circle import progress_circle
 from components.course_card import course_card
 from components.stat_card import stat_card
+from database.database import get_materi
+from pages import materi
 
 def home_page():
 
@@ -13,50 +19,29 @@ def home_page():
     # Progress
     st.subheader("📈 Progress Belajar")
 
-    col1, col2 = st.columns([1, 3])
+    left, right = st.columns([1,2])
 
-    with col1:
-        st.metric(
-            label="Progress",
-            value="0%"
-        )
+    with left:
 
-    with col2:
-        st.metric(
-            label="Chapter",
-            value="0 / 37"
-        )
+        progress_circle(0)
+
+    with right:
+
+        st.markdown("### Ringkasan")
+
+        stat1, stat2 = st.columns(2)
+
+        with stat1:
+            stat_card("📖", "Chapter", "0 / 40")
+
+        with stat2:
+            stat_card("📝", "Quiz", "0 / 40")
+
+        st.markdown("")
+
+        stat_card("🏆", "Nilai Rata-rata", "-")
 
     st.divider()
-
-    # Statistik
-    st.subheader("📊 Statistik Belajar")
-
-    col1, col2, col3 = st.columns(3)
-
-    with col1:
-
-        stat_card(
-            "📖",
-            "Chapter Selesai",
-            "0"
-        )
-
-    with col2:
-
-        stat_card(
-            "📝",
-            "Quiz Selesai",
-            "0"
-        )
-
-    with col3:
-
-        stat_card(
-            "🏆",
-            "Nilai Rata-rata",
-            "-"
-        )
 
     # ============================
     # Kategori Materi
@@ -69,29 +54,40 @@ def home_page():
     with col1:
 
         course_card(
-            icon="📘",
-            title="Perpajakan",
-            chapter="9 Chapter",
-            description="Belajar PPh, PPN, dan pajak lainnya.",
-            button_key="btn_pajak"
+            "💰",
+            "Perpajakan",
+            12,
+            0,
+            "#FFE082",
+            "btn_pajak"
         )
 
     with col2:
 
         course_card(
-            icon="📙",
-            title="Akuntansi Manajemen",
-            chapter="18 Chapter",
-            description="Materi biaya, budgeting, pengambilan keputusan dan evaluasi kinerja.",
-            button_key="btn_manajemen"
+            "📊",
+            "Akuntansi Manajemen",
+            18,
+            0,
+            "#A5D6A7",
+            "btn_manajemen"
         )
 
     with col3:
 
         course_card(
-            icon="📗",
-            title="Akuntansi Keuangan Lanjutan",
-            chapter="10 Chapter",
-            description="Konsolidasi, investasi, transaksi antar perusahaan, dan lainnya.",
-            button_key="btn_akl"
+            "📚",
+            "Akuntansi Keuangan Lanjutan",
+            10,
+            0,
+            "#90CAF9",
+            "btn_akl"
         )
+    
+    st.divider()
+
+    st.subheader("🧪 Test Google Sheets")
+
+    materi = get_materi()
+
+    st.json(materi[0])
