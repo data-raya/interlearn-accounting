@@ -69,17 +69,17 @@ def home_page():
     with col1:
 
         course_card(
-            icon="📚",
+            icon="📘",
             title="Perpajakan",
             chapter="9 Chapter",
-            description="Belajar PPh, PPN, Bea Meterai, dan pajak lainnya.",
+            description="Belajar PPh, PPN, dan pajak lainnya.",
             button_key="btn_pajak"
         )
 
     with col2:
 
         course_card(
-            icon="📘",
+            icon="📙",
             title="Akuntansi Manajemen",
             chapter="18 Chapter",
             description="Materi biaya, budgeting, pengambilan keputusan dan evaluasi kinerja.",

@@ -20,7 +20,7 @@ def sidebar():
     st.sidebar.markdown("### 📚 Materi")
 
     st.sidebar.markdown("📘 Perpajakan")
-    st.sidebar.markdown("🖕🏻 Akuntansi Manajemen")
+    st.sidebar.markdown("📙 Akuntansi Manajemen")
     st.sidebar.markdown("📗 Akuntansi Keuangan Lanjutan")
 
     st.sidebar.divider()
