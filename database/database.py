@@ -15,7 +15,7 @@ SPREADSHEET_ID = "1_zhagRE9eqIWWetdRsXz8zmrMKe1ryBnad77kEzicAg"
 
 def connect_sheet():
 
-    # Jika dijalankan di laptop
+    # Local
     if os.path.exists("config/credentials.json"):
 
         creds = Credentials.from_service_account_file(
@@ -23,20 +23,17 @@ def connect_sheet():
             scopes=SCOPES
         )
 
-    # Jika dijalankan di Streamlit Cloud
+    # Streamlit Cloud
     else:
 
         creds = Credentials.from_service_account_info(
-            dict(st.secrets),
+            st.secrets["gcp_service_account"],
             scopes=SCOPES
         )
-
 
     client = gspread.authorize(creds)
 
     return client.open_by_key(SPREADSHEET_ID)
-
-
 
 def get_materi():
 
