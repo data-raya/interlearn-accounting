@@ -1,5 +1,7 @@
 import streamlit as st
 from components.hero import hero
+from components.course_card import course_card
+from components.stat_card import stat_card
 
 def home_page():
 
@@ -11,7 +13,7 @@ def home_page():
     # Progress
     st.subheader("📈 Progress Belajar")
 
-    col1, col2 = st.columns([1,3])
+    col1, col2 = st.columns([1, 3])
 
     with col1:
         st.metric(
@@ -33,41 +35,63 @@ def home_page():
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        st.metric("Chapter Selesai", 0)
+
+        stat_card(
+            "📖",
+            "Chapter Selesai",
+            "0"
+        )
 
     with col2:
-        st.metric("Quiz Selesai", 0)
+
+        stat_card(
+            "📝",
+            "Quiz Selesai",
+            "0"
+        )
 
     with col3:
-        st.metric("Nilai Rata-rata", "-")
 
-    st.divider()
+        stat_card(
+            "🏆",
+            "Nilai Rata-rata",
+            "-"
+        )
 
-    # Kategori
+    # ============================
+    # Kategori Materi
+    # ============================
+
     st.subheader("📚 Kategori Materi")
 
     col1, col2, col3 = st.columns(3)
 
     with col1:
 
-        st.button(
-            "Mulai Belajar",
-            key="btn_pajak",
-            use_container_width=True
+        course_card(
+            icon="📚",
+            title="Perpajakan",
+            chapter="9 Chapter",
+            description="Belajar PPh, PPN, Bea Meterai, dan pajak lainnya.",
+            button_key="btn_pajak"
         )
 
     with col2:
 
-        st.button(
-            "Mulai Belajar",
-            key="btn_manajemen",
-            use_container_width=True
+        course_card(
+            icon="📘",
+            title="Akuntansi Manajemen",
+            chapter="18 Chapter",
+            description="Materi biaya, budgeting, pengambilan keputusan dan evaluasi kinerja.",
+            button_key="btn_manajemen"
         )
 
     with col3:
 
-        st.button(
-            "Mulai Belajar",
-            key="btn_akl",
-            use_container_width=True
+        course_card(
+            icon="📗",
+            title="Akuntansi Keuangan Lanjutan",
+            chapter="10 Chapter",
+            description="Konsolidasi, investasi, transaksi antar perusahaan, dan lainnya.",
+            button_key="btn_akl"
         )

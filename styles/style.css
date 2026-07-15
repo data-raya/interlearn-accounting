@@ -1,0 +1,33 @@
+/* Background */
+.main {
+    background-color: #f5f7fb;
+}
+
+/* Judul */
+.main-title{
+    font-size:38px;
+    font-weight:bold;
+    color:#0F172A;
+    margin-bottom:5px;
+}
+
+.sub-title{
+    font-size:18px;
+    color:#64748B;
+    margin-bottom:30px;
+}
+
+/* Card */
+.card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    box-shadow:0px 3px 15px rgba(0,0,0,.08);
+
+    margin-bottom:20px;
+
+}

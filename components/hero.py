@@ -2,12 +2,26 @@ import streamlit as st
 
 def hero():
 
-    st.title("👋 Selamat Datang")
+    st.markdown("""
 
-    st.subheader("InterLearn Accounting")
+<div class="card">
 
-    st.write(
-        "Media Pembelajaran Interaktif untuk "
-        "Perpajakan, Akuntansi Manajemen, "
-        "dan Akuntansi Keuangan Lanjutan."
-    )
+<div class="main-title">
+
+👋 Halo, Selamat Datang
+
+</div>
+
+<div class="sub-title">
+
+InterLearn Accounting
+
+<br>
+
+Media Pembelajaran Interaktif
+
+</div>
+
+</div>
+
+""", unsafe_allow_html=True)
