@@ -3,6 +3,7 @@ import streamlit as st
 
 from database.database import get_materi_by_id
 from utils.pdf_utils import render_pdf_page, get_total_pages
+from database.database import selesai_membaca
 
 def materi_page():
 
@@ -15,6 +16,9 @@ def materi_page():
         st.session_state.id_materi
     )
 
+    if "slide" not in st.session_state:
+        st.session_state.slide = 0
+
     st.title(materi["Judul"])
 
     st.caption(materi["Kategori"])
@@ -25,34 +29,75 @@ def materi_page():
 
     st.info(f"📄 Jumlah Slide : {materi['Jumlah Slide']}")
 
-    col1, col2 = st.columns(2)
+    left, center, right = st.columns([1,4,1])
 
-    with col1:
+    with left:
 
         if st.button("⬅ Kembali"):
 
             st.session_state.page = "chapter"
+            st.session_state.slide = 0
             st.rerun()
 
-    with col2:
+
+    with center:
+
+        pdf_path = os.path.join(
+            "assets",
+            "materi",
+            materi["Nama File"]
+        )
+
+        total = get_total_pages(pdf_path)
+
+        st.markdown(
+            f"### Slide {st.session_state.slide+1} / {total}"
+        )
+
+        image = render_pdf_page(
+            pdf_path,
+            st.session_state.slide
+        )
+
+        st.image(
+            image,
+            use_container_width=True
+        )
+
+    col_prev, col_next = st.columns(2)
+
+    with col_prev:
 
         if st.button(
-            "🚀 Mulai Belajar",
-            use_container_width=True
+            "⬅ Previous",
+            disabled=st.session_state.slide == 0
         ):
 
-            pdf_path = os.path.join(
-                "assets",
-                "materi",
-                materi["Nama File"]
-            )
+            st.session_state.slide -= 1
+            st.rerun()
+    
+    with col_next:
 
-            image = render_pdf_page(
-                pdf_path,
-                0
-            )
+        if st.session_state.slide < total - 1:
 
-            st.image(
-                image,
+            if st.button(
+                "Next ➡",
                 use_container_width=True
-            )
+            ):
+
+                st.session_state.slide += 1
+                st.rerun()
+
+        else:
+
+            if st.button(
+                "✅ Selesaikan Materi",
+                use_container_width=True,
+                type="primary"
+            ):
+
+                st.success("🎉 Selamat! Materi telah selesai dipelajari.")
+
+                # nanti update Google Sheets
+
+                # nanti pindah ke quiz

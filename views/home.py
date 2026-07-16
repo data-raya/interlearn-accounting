@@ -14,6 +14,22 @@ def home_page():
 
     st.divider()
 
+    materi = get_materi()
+
+    total_chapter = len(materi)
+
+    chapter_selesai = sum(
+        1
+        for item in materi
+        if str(item["Selesai Membaca"]).upper() == "TRUE"
+    )
+
+    progress = (
+        chapter_selesai / total_chapter * 100
+        if total_chapter > 0
+        else 0
+    )
+
     # Progress
     st.subheader("📈 Progress Belajar")
 
@@ -21,7 +37,7 @@ def home_page():
 
     with left:
 
-        progress_circle(0)
+        progress_circle(progress)
 
     with right:
 
@@ -30,7 +46,11 @@ def home_page():
         stat1, stat2 = st.columns(2)
 
         with stat1:
-            stat_card("📖", "Chapter", "0 / 40")
+            stat_card(
+            "📖",
+            "Chapter",
+            f"{chapter_selesai} / {total_chapter}"
+            )
 
         with stat2:
             stat_card("📝", "Quiz", "0 / 40")

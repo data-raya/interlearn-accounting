@@ -1,7 +1,8 @@
 import fitz
 from PIL import Image
+import streamlit as st 
 
-
+@st.cache_data
 def render_pdf_page(pdf_path, page_number):
 
     doc = fitz.open(pdf_path)
@@ -21,6 +22,7 @@ def render_pdf_page(pdf_path, page_number):
     return image
 
 
+@st.cache_data
 def get_total_pages(pdf_path):
 
     doc = fitz.open(pdf_path)
