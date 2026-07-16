@@ -76,43 +76,31 @@ def convert_drive_preview(url):
 
 def selesai_membaca(id_user, id_materi):
 
-    try:
+    sheet = connect_sheet().worksheet("UserProgress")
 
-        sheet = connect_sheet().worksheet("UserProgress")
+    data = sheet.get_all_records()
 
-        st.write("Worksheet :", sheet.title)
+    # Cek apakah user sudah menyelesaikan materi
+    for row in data:
 
-        data = sheet.get_all_records()
+        if (
+            row["ID User"] == id_user and
+            row["ID Materi"] == id_materi
+        ):
+            return
 
-        st.write("Jumlah data :", len(data))
+    # Generate ID Progress
+    id_progress = f"PR{len(data)+1:03d}"
 
-        for row in data:
+    # Simpan ke Google Sheet
+    sheet.append_row([
+        id_progress,
+        id_user,
+        id_materi,
+        "TRUE",
+        datetime.now().strftime("%Y-%m-%d")
+    ])
 
-            if (
-                row["ID User"] == id_user and
-                row["ID Materi"] == id_materi
-            ):
-
-                st.warning("Sudah pernah selesai.")
-                return
-
-        id_progress = f"PR{len(data)+1:03d}"
-
-        sheet.append_row([
-            id_progress,
-            id_user,
-            id_materi,
-            "TRUE",
-            datetime.now().strftime("%Y-%m-%d")
-        ])
-
-        st.success("Append berhasil")
-
-    except Exception as e:
-
-        st.error(e)
-
-        st.code(traceback.format_exc())
 def login_user(email, password):
 
     sheet = connect_sheet().worksheet("Users")
@@ -155,3 +143,38 @@ def register_user(nama, email, password):
     ])
 
     return True
+
+def get_user_progress(id_user):
+
+    sheet = connect_sheet().worksheet("UserProgress")
+
+    data = sheet.get_all_records()
+
+    hasil = []
+
+    for row in data:
+
+        if row["ID User"] == id_user:
+
+            hasil.append(row)
+
+    return hasil
+
+def get_progress_kategori(id_user, kategori):
+
+    materi = get_materi_by_kategori(kategori)
+
+    progress = get_user_progress(id_user)
+
+    materi_selesai = []
+
+    for row in progress:
+        materi_selesai.append(row["ID Materi"])
+
+    selesai = sum(
+        1
+        for item in materi
+        if item["ID Materi"] in materi_selesai
+    )
+
+    return selesai

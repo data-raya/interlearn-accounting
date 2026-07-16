@@ -1,9 +1,11 @@
 import os
 import streamlit as st
 
-from database.database import get_materi_by_id
 from utils.pdf_utils import render_pdf_page, get_total_pages
-from database.database import selesai_membaca
+from database.database import (
+    get_materi_by_id,
+    selesai_membaca
+)
 
 def materi_page():
 
@@ -96,8 +98,9 @@ def materi_page():
                 type="primary"
             ):
 
-                st.success("🎉 Selamat! Materi telah selesai dipelajari.")
+                selesai_membaca(
+                    st.session_state.user_id,
+                    st.session_state.id_materi
+                )
 
-                # nanti update Google Sheets
-
-                # nanti pindah ke quiz
+                st.stop()
