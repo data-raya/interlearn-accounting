@@ -2,6 +2,7 @@ from datetime import datetime
 import streamlit as st
 import gspread
 import os
+import traceback
 from google.oauth2.service_account import Credentials
 
 
@@ -75,38 +76,82 @@ def convert_drive_preview(url):
 
 def selesai_membaca(id_user, id_materi):
 
-    sheet = connect_sheet().worksheet("UserProgress")
+    try:
+
+        sheet = connect_sheet().worksheet("UserProgress")
+
+        st.write("Worksheet :", sheet.title)
+
+        data = sheet.get_all_records()
+
+        st.write("Jumlah data :", len(data))
+
+        for row in data:
+
+            if (
+                row["ID User"] == id_user and
+                row["ID Materi"] == id_materi
+            ):
+
+                st.warning("Sudah pernah selesai.")
+                return
+
+        id_progress = f"PR{len(data)+1:03d}"
+
+        sheet.append_row([
+            id_progress,
+            id_user,
+            id_materi,
+            "TRUE",
+            datetime.now().strftime("%Y-%m-%d")
+        ])
+
+        st.success("Append berhasil")
+
+    except Exception as e:
+
+        st.error(e)
+
+        st.code(traceback.format_exc())
+def login_user(email, password):
+
+    sheet = connect_sheet().worksheet("Users")
 
     data = sheet.get_all_records()
 
-    # cek apakah sudah pernah selesai
-    for i, row in enumerate(data, start=2):
+    for user in data:
 
         if (
-            row["ID User"] == id_user and
-            row["ID Materi"] == id_materi
+            user["Email"] == email and
+            user["Password"] == password
         ):
 
-            sheet.update(
-                f"D{i}:E{i}",
-                [[
-                    "TRUE",
-                    datetime.now().strftime("%Y-%m-%d")
-                ]]
-            )
+            return user
 
-            return
+    return None
 
-    # kalau belum ada -> tambah baris baru
+def register_user(nama, email, password):
 
-    id_progress = f"PR{len(data)+1:03d}"
+    sheet = connect_sheet().worksheet("Users")
 
+    data = sheet.get_all_records()
+
+    # Cek apakah email sudah dipakai
+    for user in data:
+
+        if user["Email"] == email:
+
+            return False
+
+    # Buat ID User baru
+    id_user = f"U{len(data)+1:03d}"
+
+    # Tambahkan ke Google Sheet
     sheet.append_row([
-
-        id_progress,
         id_user,
-        id_materi,
-        "TRUE",
-        datetime.now().strftime("%Y-%m-%d")
-
+        nama,
+        email,
+        password
     ])
+
+    return True
