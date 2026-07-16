@@ -64,3 +64,9 @@ def get_materi_by_id(id_materi):
             return item
 
     return None
+
+def convert_drive_preview(url):
+
+    file_id = url.split("/d/")[1].split("/")[0]
+
+    return f"https://drive.google.com/file/d/{file_id}/preview"

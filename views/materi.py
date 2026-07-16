@@ -1,5 +1,8 @@
+import os
 import streamlit as st
+
 from database.database import get_materi_by_id
+from utils.pdf_utils import render_pdf_page, get_total_pages
 
 def materi_page():
 
@@ -38,4 +41,18 @@ def materi_page():
             use_container_width=True
         ):
 
-            st.write(materi["Link Materi"])
+            pdf_path = os.path.join(
+                "assets",
+                "materi",
+                materi["Nama File"]
+            )
+
+            image = render_pdf_page(
+                pdf_path,
+                0
+            )
+
+            st.image(
+                image,
+                use_container_width=True
+            )
