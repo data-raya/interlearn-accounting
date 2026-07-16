@@ -18,17 +18,9 @@ def home_page():
 
     total_chapter = len(materi)
 
-    chapter_selesai = sum(
-        1
-        for item in materi
-        if str(item["Selesai Membaca"]).upper() == "TRUE"
-    )
+    chapter_selesai = 0
 
-    progress = (
-        chapter_selesai / total_chapter * 100
-        if total_chapter > 0
-        else 0
-    )
+    progress = 0
 
     # Progress
     st.subheader("📈 Progress Belajar")
