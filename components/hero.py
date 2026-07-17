@@ -2,32 +2,45 @@ import streamlit as st
 
 from database.database import get_user_by_id
 
-user = get_user_by_id(
-    st.session_state.user_id
-)
-
 def hero():
 
-    st.markdown("""
+    user = get_user_by_id(
+        st.session_state.user_id
+    )
 
-<div class="card">
+    left, right = st.columns([5, 1])
 
-<div class="main-title">
+    with left:
 
-👋 Halo, {user["Nama"]}!
+        st.markdown(
+            f"""
+            <div class="card">
 
-</div>
+                <div class="main-title">
+                    👋 Halo, {user["Nama"]}!
+                </div>
 
-<div class="sub-title">
+                <div class="sub-title">
 
-Belajar Akuntansi Lebih Mudah dan Interaktif
+                    Belajar Akuntansi Lebih Mudah dan Interaktif
 
-<br>
+                    <br><br>
 
-InterLearn Accounting menyediakan materi pembelajaran, latihan soal, kuis, dan pemantauan progres belajar untuk mendukung proses pembelajaran akuntansi secara efektif.
+                    InterLearn Accounting menyediakan materi pembelajaran,
+                    latihan soal, kuis, dan pemantauan progres belajar
+                    untuk mendukung proses pembelajaran akuntansi
+                    secara efektif.
 
-</div>
+                </div>
 
-</div>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-""", unsafe_allow_html=True)
+    with right:
+
+        st.image(
+            "assets/logo.png",
+            width=140
+        )
