@@ -34,17 +34,17 @@
 
 }
 
-/* Toolbar kanan atas */
+/* Hilangkan toolbar kanan atas */
 [data-testid="stToolbar"]{
-    display:none;
+    display: none;
 }
 
-/* Footer "Made with Streamlit" */
-footer{
-    display:none;
-}
-
-/* Main menu */
+/* Hilangkan menu tiga titik */
 #MainMenu{
-    display:none;
+    display: none;
+}
+
+/* Hilangkan footer */
+footer{
+    display: none;
 }
