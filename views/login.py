@@ -3,7 +3,34 @@ from database.database import login_user
 
 def login_page():
 
-    st.title("🔐 Login")
+    col1, col2, col3 = st.columns([1,1,1])
+
+    with col2:
+
+        st.image(
+            "assets/logo.png",
+            width=140
+        )
+
+    st.markdown(
+        """
+        <h1 style="text-align:center; margin-bottom:0;">
+            InterLearn Accounting
+        </h1>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        """
+        <p style="text-align:center; opacity:0.7;">
+            Silakan login untuk melanjutkan pembelajaran
+        </p>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.write("")
 
     email = st.text_input("Email")
 
@@ -22,14 +49,11 @@ def login_page():
             password
         )
 
-        st.write(user)
-
         if user:
 
             st.session_state.logged_in = True
             st.session_state.user_id = user["ID User"]
             st.session_state.nama = user["Nama"]
-
             st.session_state.page = "home"
 
             st.rerun()
