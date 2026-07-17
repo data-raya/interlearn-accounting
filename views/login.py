@@ -3,10 +3,9 @@ from database.database import login_user
 
 def login_page():
 
-    col1, col2, col3 = st.columns([1,2,1])
+    left, center, right = st.columns([2,1,2])
 
-    with col2:
-
+    with center:
         st.image(
             "assets/logo.png",
             width=140
