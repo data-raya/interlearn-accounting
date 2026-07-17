@@ -38,13 +38,3 @@
 [data-testid="stToolbar"]{
     display: none;
 }
-
-/* Hilangkan menu tiga titik */
-#MainMenu{
-    display: none;
-}
-
-/* Hilangkan footer */
-footer{
-    display: none;
-}
