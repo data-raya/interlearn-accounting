@@ -5,11 +5,6 @@ def sidebar():
 
     st.sidebar.image(
         "assets/logo.png",
-        width=90
-    )
-
-    st.sidebar.image(
-        "assets/logo.png",
         width=170
     )
 

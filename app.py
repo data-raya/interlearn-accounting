@@ -45,3 +45,38 @@ if not st.session_state.logged_in:
 
         from views.register import register_page
         register_page()
+
+# Jika sudah login
+else:
+
+    sidebar()
+
+    if "page" not in st.session_state:
+        st.session_state.page = "home"
+
+    if st.session_state.page == "home":
+        home_page()
+
+    elif st.session_state.page == "chapter":
+        from views.chapter import chapter_page
+        chapter_page()
+
+    elif st.session_state.page == "materi":
+        from views.materi import materi_page
+        materi_page()
+
+    elif st.session_state.page == "quiz":
+        from views.quiz import quiz_page
+        quiz_page()
+
+    elif st.session_state.page == "quiz_detail":
+        from views.quiz_detail import quiz_page
+        quiz_page()
+
+    elif st.session_state.page == "hasil":
+        from views.hasil import hasil_page
+        hasil_page()
+
+    elif st.session_state.page == "profile":
+        from views.profile import profile_page
+        profile_page()

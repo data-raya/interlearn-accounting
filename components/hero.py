@@ -7,7 +7,7 @@ def hero():
     user = get_user_by_id(
         st.session_state.user_id
     )
-
+    
     left, right = st.columns([5, 1])
 
     with left:

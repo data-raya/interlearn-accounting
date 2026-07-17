@@ -7,55 +7,29 @@
 .main-title{
     font-size:38px;
     font-weight:bold;
-    color:#0F172A;
     margin-bottom:5px;
 }
 
 .sub-title{
     font-size:18px;
-    color:#64748B;
     margin-bottom:30px;
 }
 
 /* Card */
 .card{
 
-    border-radius:18px;
+    background:transparent;
 
-    padding:25px;
+    border:none;
+    
+    border-radius:0;
 
-    border:1px solid rgba(150,150,150,.2);
+    box-shadow:none;
+    
+    padding:0;
+
+    box-shadow:0;
 
     margin-bottom:20px;
-
-}
-
-div[data-testid="stMetric"]{
-
-    border-radius:15px;
-
-    padding:20px;
-
-    border:1px solid #E5E7EB;
-
-    background:white;
-
-    box-shadow:0 4px 15px rgba(0,0,0,.06);
-
-}
-
-div[data-testid="stVerticalBlockBorderWrapper"]{
-
-    border-radius:18px;
-
-}
-
-.stButton>button{
-
-    border-radius:10px;
-
-    height:45px;
-
-    font-weight:600;
 
 }
