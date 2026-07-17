@@ -3,7 +3,7 @@ from database.database import login_user
 
 def login_page():
 
-    col1, col2, col3 = st.columns([1,1,1])
+    col1, col2, col3 = st.columns([1,2,1])
 
     with col2:
 
@@ -15,7 +15,7 @@ def login_page():
     st.markdown(
         """
         <h1 style="text-align:center; margin-bottom:0;">
-            InterLearn Accounting
+        InterLearn Accounting
         </h1>
         """,
         unsafe_allow_html=True
