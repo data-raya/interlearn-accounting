@@ -33,3 +33,23 @@
     margin-bottom:20px;
 
 }
+
+/* Toolbar kanan atas */
+[data-testid="stToolbar"]{
+    display:none;
+}
+
+/* Header Streamlit */
+header{
+    display:none;
+}
+
+/* Footer "Made with Streamlit" */
+footer{
+    display:none;
+}
+
+/* Main menu */
+#MainMenu{
+    display:none;
+}
