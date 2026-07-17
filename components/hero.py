@@ -7,40 +7,27 @@ def hero():
     user = get_user_by_id(
         st.session_state.user_id
     )
-    
-    left, right = st.columns([5, 1])
 
-    with left:
+    st.markdown(f"""
 
-        st.markdown(
-            f"""
-            <div class="card">
+<div class="card">
 
-                <div class="main-title">
-                    👋 Halo, {user["Nama"]}!
-                </div>
+<div class="main-title">
 
-                <div class="sub-title">
+👋 Halo, {user["Nama"]}!
 
-                    Belajar Akuntansi Lebih Mudah dan Interaktif
+</div>
 
-                    <br><br>
+<div class="sub-title">
 
-                    InterLearn Accounting menyediakan materi pembelajaran,
-                    latihan soal, kuis, dan pemantauan progres belajar
-                    untuk mendukung proses pembelajaran akuntansi
-                    secara efektif.
+Belajar Akuntansi Lebih Mudah dan Interaktif
 
-                </div>
+<br>
 
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+InterLearn Accounting menyediakan materi pembelajaran, latihan soal, kuis, dan pemantauan progres belajar untuk mendukung proses pembelajaran akuntansi secara efektif.
 
-    with right:
+</div>
 
-        st.image(
-            "assets/logo.png",
-            width=140
-        )
+</div>
+
+""", unsafe_allow_html=True)
