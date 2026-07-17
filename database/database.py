@@ -160,6 +160,17 @@ def get_user_progress(id_user):
 
     return hasil
 
+def sudah_selesai_materi(id_user, id_materi):
+
+    progress = get_user_progress(id_user)
+
+    for row in progress:
+
+        if row["ID Materi"] == id_materi:
+            return True
+
+    return False
+
 def get_progress_kategori(id_user, kategori):
 
     materi = get_materi_by_kategori(kategori)
@@ -178,3 +189,130 @@ def get_progress_kategori(id_user, kategori):
     )
 
     return selesai
+
+def get_quiz_by_materi(id_materi):
+
+    sheet = connect_sheet().worksheet("Quiz")
+
+    data = sheet.get_all_records()
+
+    hasil = []
+
+    for row in data:
+
+        if row["ID Materi"] == id_materi:
+
+            hasil.append(row)
+
+    hasil.sort(key=lambda x: int(x["Nomor Soal"]))
+
+    return hasil
+
+def simpan_hasil_quiz(
+    id_user,
+    id_materi,
+    nilai,
+    benar,
+    salah
+):
+
+    sheet = connect_sheet().worksheet("UserQuiz")
+
+    data = sheet.get_all_records()
+
+    # Cek apakah sudah pernah quiz
+    for row in data:
+
+        if (
+            row["ID User"] == id_user and
+            row["ID Materi"] == id_materi
+        ):
+
+            return
+
+    id_hasil = f"UQ{len(data)+1:03d}"
+
+    sheet.append_row([
+
+        id_hasil,
+
+        id_user,
+
+        id_materi,
+
+        nilai,
+
+        benar,
+
+        salah,
+
+        "Lulus" if nilai >= 70 else "Tidak Lulus",
+
+        datetime.now().strftime("%Y-%m-%d")
+
+    ])
+
+def get_user_quiz(id_user):
+
+    sheet = connect_sheet().worksheet("UserQuiz")
+
+    data = sheet.get_all_records()
+
+    hasil = []
+
+    for row in data:
+
+        if row["ID User"] == id_user:
+
+            hasil.append(row)
+
+    return hasil
+
+def get_rata_rata_quiz(id_user):
+
+    quiz = get_user_quiz(id_user)
+
+    if len(quiz) == 0:
+        return 0
+
+    total = sum(int(item["Nilai"]) for item in quiz)
+
+    return round(total / len(quiz)) 
+
+def cek_sudah_quiz(id_user, id_materi):
+
+    data = get_user_quiz(id_user)
+
+    for row in data:
+
+        if row["ID Materi"] == id_materi:
+
+            return True
+
+    return False
+
+def get_hasil_quiz(id_user, id_materi):
+
+    data = get_user_quiz(id_user)
+
+    for row in data:
+
+        if row["ID Materi"] == id_materi:
+
+            return row
+
+    return None
+
+def get_user_by_id(id_user):
+
+    sheet = connect_sheet().worksheet("Users")
+
+    data = sheet.get_all_records()
+
+    for row in data:
+
+        if row["ID User"] == id_user:
+
+            return row
+
+    return None

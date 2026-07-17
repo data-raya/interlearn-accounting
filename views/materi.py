@@ -4,10 +4,16 @@ import streamlit as st
 from utils.pdf_utils import render_pdf_page, get_total_pages
 from database.database import (
     get_materi_by_id,
-    selesai_membaca
+    selesai_membaca,
+    sudah_selesai_materi
 )
 
+
 def materi_page():
+
+    # State ketika materi selesai
+    if "materi_selesai" not in st.session_state:
+        st.session_state.materi_selesai = False
 
     if "id_materi" not in st.session_state:
 
@@ -15,6 +21,11 @@ def materi_page():
         return
 
     materi = get_materi_by_id(
+        st.session_state.id_materi
+    )
+
+    sudah_selesai = sudah_selesai_materi(
+        st.session_state.user_id,
         st.session_state.id_materi
     )
 
@@ -27,8 +38,6 @@ def materi_page():
 
     st.divider()
 
-    st.write(materi["Deskripsi"])
-
     st.info(f"📄 Jumlah Slide : {materi['Jumlah Slide']}")
 
     left, center, right = st.columns([1,4,1])
@@ -40,7 +49,6 @@ def materi_page():
             st.session_state.page = "chapter"
             st.session_state.slide = 0
             st.rerun()
-
 
     with center:
 
@@ -77,7 +85,7 @@ def materi_page():
 
             st.session_state.slide -= 1
             st.rerun()
-    
+
     with col_next:
 
         if st.session_state.slide < total - 1:
@@ -103,4 +111,42 @@ def materi_page():
                     st.session_state.id_materi
                 )
 
-                st.stop()
+                st.session_state.materi_selesai = True
+
+                st.rerun()
+
+    # ==========================
+    # Setelah materi selesai
+    # ==========================
+
+    if st.session_state.materi_selesai or sudah_selesai:
+
+        st.success("✅ Materi sudah selesai dipelajari!")
+
+        col1, col2 = st.columns(2)
+
+        with col1:
+
+            if st.button(
+                "📝 Kerjakan Quiz",
+                use_container_width=True
+            ):
+
+                st.session_state.materi_selesai = False
+                st.session_state.slide = 0
+                st.session_state.page = "quiz_detail"
+
+                st.rerun()
+
+        with col2:
+
+            if st.button(
+                "🏠 Dashboard",
+                use_container_width=True
+            ):
+
+                st.session_state.materi_selesai = False
+                st.session_state.slide = 0
+                st.session_state.page = "home"
+
+                st.rerun()

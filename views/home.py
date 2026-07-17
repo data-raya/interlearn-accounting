@@ -7,7 +7,9 @@ from components.stat_card import stat_card
 from database.database import (
     get_materi,
     get_user_progress,
-    get_progress_kategori
+    get_progress_kategori,
+    get_user_quiz,
+    get_rata_rata_quiz
 )
 
 from views import materi
@@ -22,6 +24,18 @@ def home_page():
     materi = get_materi()
 
     progress = get_user_progress(
+        st.session_state.user_id
+    )
+
+    quiz = get_user_quiz(
+        st.session_state.user_id
+    )
+
+    total_quiz = len(get_materi())
+
+    quiz_selesai = len(quiz)
+
+    rata_rata = get_rata_rata_quiz(
         st.session_state.user_id
     )
 
@@ -58,11 +72,19 @@ def home_page():
             )
 
         with stat2:
-            stat_card("📝", "Quiz", "0 / 40")
+            stat_card(
+            "📝",
+            "Quiz",
+            f"{quiz_selesai} / {total_quiz}"
+        )
 
         st.markdown("")
 
-        stat_card("🏆", "Nilai Rata-rata", "-")
+        stat_card(
+            "🏆",
+            "Nilai Rata-rata",
+            "-" if quiz_selesai == 0 else rata_rata
+        )
 
     st.divider()
 
