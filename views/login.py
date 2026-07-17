@@ -15,7 +15,8 @@ def login_page():
     st.markdown(
         """
         <h1 style="text-align:center; margin-bottom:0;">
-        InterLearn Accounting
+        InterLearn 
+        Accounting
         </h1>
         """,
         unsafe_allow_html=True
