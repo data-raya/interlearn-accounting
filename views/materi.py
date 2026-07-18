@@ -20,14 +20,25 @@ def materi_page():
         st.warning("Materi tidak ditemukan.")
         return
 
-    materi = get_materi_by_id(
-        st.session_state.id_materi
-    )
+    if (
+        "materi_data" not in st.session_state
+        or st.session_state.materi_data["ID Materi"] != st.session_state.id_materi
+    ):
 
-    sudah_selesai = sudah_selesai_materi(
-        st.session_state.user_id,
-        st.session_state.id_materi
-    )
+        st.session_state.materi_data = get_materi_by_id(
+            st.session_state.id_materi
+        )
+
+    materi = st.session_state.materi_data
+
+    if "status_materi" not in st.session_state:
+
+        st.session_state.status_materi = sudah_selesai_materi(
+            st.session_state.user_id,
+            st.session_state.id_materi
+        )
+
+    sudah_selesai = st.session_state.status_materi
 
     if "slide" not in st.session_state:
         st.session_state.slide = 0
@@ -46,8 +57,12 @@ def materi_page():
 
         if st.button("⬅ Kembali"):
 
+            st.session_state.pop("materi_data", None)
+            st.session_state.pop("status_materi", None)
+
             st.session_state.page = "chapter"
             st.session_state.slide = 0
+
             st.rerun()
 
     with center:
@@ -112,6 +127,7 @@ def materi_page():
                 )
 
                 st.session_state.materi_selesai = True
+                st.session_state.status_materi = True
 
                 st.rerun()
 
@@ -144,6 +160,9 @@ def materi_page():
                 "🏠 Dashboard",
                 use_container_width=True
             ):
+
+                st.session_state.pop("materi_data", None)
+                st.session_state.pop("status_materi", None)
 
                 st.session_state.materi_selesai = False
                 st.session_state.slide = 0

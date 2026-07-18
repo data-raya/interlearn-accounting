@@ -16,12 +16,8 @@ from views import materi
 
 def home_page():
 
-    st.write("Home Berjalan")
-
     # Hero Section
     hero()
-
-    st.write("SETELAH HERO")
 
     st.divider()
 
@@ -40,7 +36,7 @@ def home_page():
     quiz_selesai = len(quiz)
 
     rata_rata = get_rata_rata_quiz(
-        st.session_state.user_id
+        quiz
     )
 
     total_chapter = len(materi)

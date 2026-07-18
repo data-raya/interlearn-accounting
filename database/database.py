@@ -299,16 +299,14 @@ def get_user_quiz(id_user):
 
     return hasil
 
-def get_rata_rata_quiz(id_user):
+def get_rata_rata_quiz(data_quiz):
 
-    quiz = get_user_quiz(id_user)
-
-    if len(quiz) == 0:
+    if len(data_quiz) == 0:
         return 0
 
-    total = sum(int(item["Nilai"]) for item in quiz)
+    total = sum(int(item["Nilai"]) for item in data_quiz)
 
-    return round(total / len(quiz)) 
+    return round(total / len(data_quiz)) 
 
 def cek_sudah_quiz(id_user, id_materi):
 

@@ -20,21 +20,15 @@ def quiz_page():
         st.session_state.user_id
     )
 
-    materi_selesai = []
+    materi_selesai = {
+        item["ID Materi"]
+        for item in progress
+    }
 
-    for item in progress:
-
-        materi_selesai.append(
-            item["ID Materi"]
-        )
-
-    quiz_selesai = []
-
-    for item in hasil_quiz:
-
-        quiz_selesai.append(
-            item["ID Materi"]
-        )
+    quiz_selesai = {
+        item["ID Materi"]
+        for item in hasil_quiz
+    }
 
     for item in materi:
 

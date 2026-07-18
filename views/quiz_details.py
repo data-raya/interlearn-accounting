@@ -16,9 +16,18 @@ def quiz_page():
         return
 
     # Ambil semua soal sesuai materi
-    quiz = get_quiz_by_materi(
-        st.session_state.id_materi
-    )
+    if (
+        "quiz_data" not in st.session_state
+        or st.session_state.get("quiz_materi") != st.session_state.id_materi
+    ):
+
+        st.session_state.quiz_data = get_quiz_by_materi(
+            st.session_state.id_materi
+        )
+
+        st.session_state.quiz_materi = st.session_state.id_materi
+
+    quiz = st.session_state.quiz_data
 
     # Kalau belum ada soal
     if len(quiz) == 0:
@@ -135,16 +144,9 @@ def quiz_page():
 
                     jawaban_benar = item["Jawaban"]
 
-                    mapping = {
+                    jawaban_benar = item[f"Pilihan {item['Jawaban']}"]
 
-                        "A": item["Pilihan A"],
-                        "B": item["Pilihan B"],
-                        "C": item["Pilihan C"],
-                        "D": item["Pilihan D"]
-
-                    }
-
-                    if jawaban_user == mapping[jawaban_benar]:
+                    if jawaban_user == jawaban_benar:
 
                         benar += 1
 
@@ -171,6 +173,9 @@ def quiz_page():
                     salah
 
                 )
+
+                st.session_state.pop("quiz_data", None)
+                st.session_state.pop("quiz_materi", None)
 
                 st.session_state.page = "hasil"
 

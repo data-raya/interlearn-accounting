@@ -17,22 +17,22 @@ def profile_page():
 
     materi = get_materi()
 
+    progress_user = get_user_progress(
+        st.session_state.user_id
+    )
+
+    quiz_user = get_user_quiz(
+        st.session_state.user_id
+    )
+
     total_materi = len(materi)
 
-    materi_selesai = len(
-        get_user_progress(
-            st.session_state.user_id
-        )
-    )
+    materi_selesai = len(progress_user)
 
-    quiz_selesai = len(
-        get_user_quiz(
-            st.session_state.user_id
-        )
-    )
+    quiz_selesai = len(quiz_user)
 
     rata_rata = get_rata_rata_quiz(
-        st.session_state.user_id
+        quiz_user
     )
 
     progress = (
