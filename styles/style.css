@@ -13,12 +13,12 @@ h1,h2,h3,h4,h5,h6,p,div{
 }
 
 section[data-testid="stSidebar"]{
-    background:#EEF6FF;
+    background:#f4970e;
 }
 
 /* Background */
 .main {
-    background-color: #f5f7fb;
+    background-color: #f4970e;
 }
 
 /* Judul */
