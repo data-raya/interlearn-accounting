@@ -25,7 +25,15 @@ def course_card(icon, title, chapter, progress, color, key, kategori):
             unsafe_allow_html=True
         )
 
-        st.progress(progress/100)
+        st.progress(progress / 100)
+
+        col1, col2 = st.columns([1,1])
+
+        with col1:
+            st.caption("Progress")
+
+        with col2:
+            st.caption(f"{progress:.0f}%")
 
         if st.button(
             "🚀 Buka Materi",
