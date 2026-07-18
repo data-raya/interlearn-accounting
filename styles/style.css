@@ -1,3 +1,11 @@
+* {
+    font-family: "Times New Roman", Times, serif !important;
+}
+
+section[data-testid="stSidebar"]{
+    background:#EEF6FF;
+}
+
 /* Background */
 .main {
     background-color: #f5f7fb;
