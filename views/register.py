@@ -5,7 +5,7 @@ def register_page():
 
     st.title("📝 Register")
 
-    nama = st.text_input("Nama Lengkap")
+    nama = st.text_input("Nama")
 
     email = st.text_input("Email")
 

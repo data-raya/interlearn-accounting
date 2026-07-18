@@ -25,11 +25,7 @@ def course_card(icon, title, chapter, progress, color, key, kategori):
             unsafe_allow_html=True
         )
 
-        st.write(f"📖 **{chapter} Chapter**")
-
         st.progress(progress/100)
-
-        st.write(f"**Progress : {progress}%**")
 
         if st.button(
             "🚀 Buka Materi",

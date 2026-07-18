@@ -16,8 +16,12 @@ from views import materi
 
 def home_page():
 
+    st.write("Home Berjalan")
+
     # Hero Section
     hero()
+
+    st.write("SETELAH HERO")
 
     st.divider()
 
