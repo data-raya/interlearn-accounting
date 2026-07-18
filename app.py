@@ -70,7 +70,7 @@ else:
         quiz_page()
 
     elif st.session_state.page == "quiz_detail":
-        from views.quiz_detail import quiz_page
+        from views.quiz_details import quiz_page
         quiz_page()
 
     elif st.session_state.page == "hasil":
