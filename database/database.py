@@ -1,4 +1,5 @@
 from datetime import datetime
+import time 
 import streamlit as st
 import gspread
 import os
@@ -14,33 +15,65 @@ SCOPES = [
 
 SPREADSHEET_ID = "1_zhagRE9eqIWWetdRsXz8zmrMKe1ryBnad77kEzicAg"
 
-
+@st.cache_resource
 def connect_sheet():
 
-    # Local
-    if os.path.exists("config/credentials.json"):
+    for i in range(3):
 
-        creds = Credentials.from_service_account_file(
-            "config/credentials.json",
-            scopes=SCOPES
-        )
+        try:
 
-    # Streamlit Cloud
-    else:
+            if os.path.exists("config/credentials.json"):
 
-        creds = Credentials.from_service_account_info(
-            st.secrets["gcp_service_account"],
-            scopes=SCOPES
-        )
+                creds = Credentials.from_service_account_file(
+                    "config/credentials.json",
+                    scopes=SCOPES
+                )
 
-    client = gspread.authorize(creds)
+            else:
 
-    return client.open_by_key(SPREADSHEET_ID)
+                creds = Credentials.from_service_account_info(
+                    st.secrets["gcp_service_account"],
+                    scopes=SCOPES
+                )
+
+            client = gspread.authorize(creds)
+
+            return client.open_by_key(SPREADSHEET_ID)
+
+        except Exception:
+
+            if i == 2:
+                raise
+
+            time.sleep(2)
 
 @st.cache_data(ttl=300)
 def get_materi():
 
     sheet = connect_sheet().worksheet("Materi")
+
+    return sheet.get_all_records()
+
+@st.cache_data(ttl=300)
+def get_users():
+
+    sheet = connect_sheet().worksheet("Users")
+
+    return sheet.get_all_records()
+
+
+@st.cache_data(ttl=300)
+def get_user_progress_data():
+
+    sheet = connect_sheet().worksheet("UserProgress")
+
+    return sheet.get_all_records()
+
+
+@st.cache_data(ttl=300)
+def get_user_quiz_data():
+
+    sheet = connect_sheet().worksheet("UserQuiz")
 
     return sheet.get_all_records()
 
@@ -103,9 +136,7 @@ def selesai_membaca(id_user, id_materi):
 
 def login_user(email, password):
 
-    sheet = connect_sheet().worksheet("Users")
-
-    data = sheet.get_all_records()
+    data = get_users()
 
     for user in data:
 
@@ -122,7 +153,7 @@ def register_user(nama, email, password):
 
     sheet = connect_sheet().worksheet("Users")
 
-    data = sheet.get_all_records()
+    data = get_users()
 
     # Cek apakah email sudah dipakai
     for user in data:
@@ -142,13 +173,13 @@ def register_user(nama, email, password):
         password
     ])
 
+    get_users.clear()
+
     return True
 
 def get_user_progress(id_user):
 
-    sheet = connect_sheet().worksheet("UserProgress")
-
-    data = sheet.get_all_records()
+    data = get_user_progress_data()
 
     hasil = []
 
@@ -252,11 +283,11 @@ def simpan_hasil_quiz(
 
     ])
 
+    get_user_progress_data.clear()
+
 def get_user_quiz(id_user):
 
-    sheet = connect_sheet().worksheet("UserQuiz")
-
-    data = sheet.get_all_records()
+    data = get_user_quiz_data()
 
     hasil = []
 
@@ -305,9 +336,7 @@ def get_hasil_quiz(id_user, id_materi):
 
 def get_user_by_id(id_user):
 
-    sheet = connect_sheet().worksheet("Users")
-
-    data = sheet.get_all_records()
+    data = get_users()
 
     for row in data:
 
